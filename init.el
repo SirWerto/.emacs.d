@@ -3,13 +3,12 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 
-(setq package-check-signature nil)
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 (package-refresh-contents)
+
+(package-install 'use-package)
 
 (eval-when-compile
   (require 'use-package))
@@ -48,10 +47,9 @@
 (use-package flycheck
   :init (global-flycheck-mode))
 
-(use-package selectrum
+(use-package ivy
   :config
-  (selectrum-mode 1))
-
+  (ivy-mode 1))
 
 (global-linum-mode t)
 (set-face-foreground 'linum "grey")
@@ -66,6 +64,8 @@
 (use-package erlang)
 ;; Elixir
 (use-package elixir-mode)
+;; Scala
+(use-package scala-mode)
 
 
 
@@ -84,29 +84,28 @@
 ;; tengo que ver como menterlas en config
 ;; hacer funcion que haga prepend a una lista
 ;; como add-to-list pero multiples veces
-(add-to-list 'eglot-server-programs '(erlang-mode . ("/home/jorge/.lsps/erlang/bin/erlang_ls" "--transport" "stdio")))
-(add-to-list 'eglot-server-programs '(elixir-mode "/home/jorge/.lsps/elixir/elixir-ls-1.12/language_server.sh"))
+;; (add-to-list 'eglot-server-programs '(erlang-mode . ("/home/jorge/.lsps/erlang/bin/erlang_ls" "--transport" "stdio")))
+;; (add-to-list 'eglot-server-programs '(elixir-mode "/home/jorge/.lsps/elixir/elixir-ls-1.12/language_server.sh"))
+
+(add-to-list 'eglot-server-programs '(erlang-mode . ((getenv "LSP_ERLANG") "--transport" "stdio")))
+(add-to-list 'eglot-server-programs '(elixir-mode (getenv "LSP_ELIXIR")))
+(add-to-list 'eglot-server-programs '(scala-mode (getenv "LSP_SCALA")))
 
 
+;;;; Fancy
 ;; Themes
 (use-package badwolf-theme
   :config
   (load-theme 'badwolf t))
 
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook))
 
 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (magit selectrum flycheck badwolf-theme parent-mode erlang projectile elixir-mode evil-collection evil use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+(setq custom-file "~/.emacs.d/custom.el")
+(when (file-exists-p custom-file) (write-region "" nil custom-file))
+(load custom-file)
+
