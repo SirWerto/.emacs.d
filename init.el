@@ -81,16 +81,9 @@
 	      ("C-e h" . 'eldoc)
 	      ("C-e g d" . 'xref-find-definitions)))
 
-;; tengo que ver como menterlas en config
-;; hacer funcion que haga prepend a una lista
-;; como add-to-list pero multiples veces
-;; (add-to-list 'eglot-server-programs '(erlang-mode . ("/home/jorge/.lsps/erlang/bin/erlang_ls" "--transport" "stdio")))
-;; (add-to-list 'eglot-server-programs '(elixir-mode "/home/jorge/.lsps/elixir/elixir-ls-1.12/language_server.sh"))
-
-(add-to-list 'eglot-server-programs '(erlang-mode . ((getenv "LSP_ERLANG") "--transport" "stdio")))
-(add-to-list 'eglot-server-programs '(elixir-mode (getenv "LSP_ELIXIR")))
-(add-to-list 'eglot-server-programs '(scala-mode (getenv "LSP_SCALA")))
-
+(add-to-list 'eglot-server-programs `(erlang-mode  ,(getenv "LSP_ERLANG") "--transport" "stdio"))
+(add-to-list 'eglot-server-programs `(elixir-mode ,(getenv "LSP_ELIXIR")))
+(add-to-list 'eglot-server-programs `(scala-mode ,(getenv "LSP_SCALA")))
 
 ;;;; Fancy
 ;; Themes
