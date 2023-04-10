@@ -57,6 +57,9 @@
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 
+;; Org :)
+(use-package org-roam)
+
 
 
 
@@ -71,9 +74,6 @@
 
 ;; Emacs LSP
 (use-package eglot
-  :hook (
-	 (erlang-mode . eglot-ensure)
-	 (elixir-mode . eglot-ensure))
   :demand t
   :bind (
 	 :map evil-normal-state-map
@@ -85,11 +85,17 @@
 (add-to-list 'eglot-server-programs `(elixir-mode ,(getenv "LSP_ELIXIR")))
 (add-to-list 'eglot-server-programs `(scala-mode ,(getenv "LSP_SCALA")))
 
+;;;; Example
+;; export LSP_ELIXIR="path/to/elixir-ls-1.14-25.1/language_server.sh"
+
 ;;;; Fancy
 ;; Themes
 (use-package badwolf-theme
   :config
   (load-theme 'badwolf t))
+
+(use-package solo-jazz-theme
+  :config)
 
 (use-package dashboard
   :config
