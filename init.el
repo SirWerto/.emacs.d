@@ -51,6 +51,9 @@
   :config
   (ivy-mode 1))
 
+
+(global-auto-revert-mode t)
+
 (global-linum-mode t)
 (set-face-foreground 'linum "grey")
 
