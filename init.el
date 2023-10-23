@@ -54,8 +54,8 @@
 
 (global-auto-revert-mode t)
 
-(global-linum-mode t)
-(set-face-foreground 'linum "grey")
+(global-display-line-numbers-mode t)
+(set-face-foreground 'line-number "grey")
 
 (show-paren-mode 1)
 (setq show-paren-delay 0)
