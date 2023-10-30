@@ -51,7 +51,6 @@
   :config
   (ivy-mode 1))
 
-
 (global-auto-revert-mode t)
 
 (global-display-line-numbers-mode t)
@@ -61,7 +60,10 @@
 (setq show-paren-delay 0)
 
 ;; Org :)
-(use-package org-roam)
+(use-package org-roam
+  :init
+  (setq org-roam-directory (file-truename "~/hive-mind"))
+  (org-roam-db-autosync-mode))
 
 
 
@@ -93,12 +95,11 @@
 
 ;;;; Fancy
 ;; Themes
+
+;; (use-package solo-jazz-theme)
 (use-package badwolf-theme
   :config
   (load-theme 'badwolf t))
-
-(use-package solo-jazz-theme
-  :config)
 
 (use-package dashboard
   :config
