@@ -63,7 +63,17 @@
 (use-package org-roam
   :init
   (setq org-roam-directory (file-truename "~/hive-mind"))
-  (org-roam-db-autosync-mode))
+  (setq org-roam-dailies-directory "daily/")
+  (setq org-roam-dailies-capture-templates
+	'(("d" "default" entry
+           "* %?"
+           :target (file+head "%<%Y-%m-%d>.org"
+                              "#+title: %<%Y-%m-%d>\n"))))
+  (org-roam-db-autosync-mode)
+
+  :bind (("C-c o r i" . org-roam-node-insert)
+	 ("C-c o r f" . org-roam-node-find)
+	 ("C-c o r c" . org-roam-dailies-capture-today)))
 
 
 
