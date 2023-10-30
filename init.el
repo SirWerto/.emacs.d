@@ -84,6 +84,8 @@
 (use-package elixir-mode)
 ;; Scala
 (use-package scala-mode)
+;; Python
+(use-package python-mode)
 
 
 
@@ -99,6 +101,7 @@
 (add-to-list 'eglot-server-programs `(erlang-mode  ,(getenv "LSP_ERLANG") "--transport" "stdio"))
 (add-to-list 'eglot-server-programs `(elixir-mode ,(getenv "LSP_ELIXIR")))
 (add-to-list 'eglot-server-programs `(scala-mode ,(getenv "LSP_SCALA")))
+(add-to-list 'eglot-server-programs `(python-mode ,(getenv "LSP_PYTHON") "--stdio"))
 
 ;;;; Example
 ;; export LSP_ELIXIR="path/to/elixir-ls-1.14-25.1/language_server.sh"
