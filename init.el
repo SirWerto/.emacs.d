@@ -69,11 +69,29 @@
            "* %?"
            :target (file+head "%<%Y-%m-%d>.org"
                               "#+title: %<%Y-%m-%d>\n"))))
+  (setq org-roam-capture-templates
+	'
+	(
+	 ("d" "default" plain "%?" :target
+	  (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}
+")
+	  :unnarrowed t)
+
+	 ("f" "table field" plain "%?" :target
+	  (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}
+
+
+Tables ->
+")
+
+	  :unnarrowed t)
+	 )
+	)
   (org-roam-db-autosync-mode)
 
   :bind (("C-c o r i" . org-roam-node-insert)
 	 ("C-c o r f" . org-roam-node-find)
-	 ("C-c o r c" . org-roam-dailies-capture-today)))
+	 ("C-c o r c" . org-roam-dailies-goto-today)))
 
 
 
