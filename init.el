@@ -44,9 +44,6 @@
   :config
   (global-company-mode))
 
-(use-package flycheck
-  :init (global-flycheck-mode))
-
 (use-package ivy
   :config
   (ivy-mode 1))
@@ -95,6 +92,8 @@ Tables ->
 
 
 
+(add-hook 'prog-mode-hook 'flymake-mode)
+
 
 ;; Erlang
 (use-package erlang)
@@ -104,22 +103,29 @@ Tables ->
 (use-package scala-mode)
 ;; Python
 (use-package python-mode)
+(use-package py-autopep8
+  :hook ((python-mode) . py-autopep8-mode))
 
 
 
 ;; Emacs LSP
 (use-package eglot
   :demand t
+  :init (setq lsp-folder (getenv "LSP_FOLDER"))
   :bind (
 	 :map evil-normal-state-map
 	      ("C-e r" . 'eglot-rename)
 	      ("C-e h" . 'eldoc)
-	      ("C-e g d" . 'xref-find-definitions)))
+	      ("C-e g d" . 'xref-find-definitions))
+  :config ())
+
 
 (add-to-list 'eglot-server-programs `(erlang-mode  ,(getenv "LSP_ERLANG") "--transport" "stdio"))
 (add-to-list 'eglot-server-programs `(elixir-mode ,(getenv "LSP_ELIXIR")))
-(add-to-list 'eglot-server-programs `(scala-mode ,(getenv "LSP_SCALA")))
-(add-to-list 'eglot-server-programs `(python-mode ,(getenv "LSP_PYTHON") "--stdio"))
+(add-to-list 'eglot-server-programs `(scala-mode , (concat lsp-folder "/" "metals")))
+(add-to-list 'eglot-server-programs `(python-mode ,(concat lsp-folder "/" "pyright") "--stdio"))
+
+
 
 ;;;; Example
 ;; export LSP_ELIXIR="path/to/elixir-ls-1.14-25.1/language_server.sh"
