@@ -117,7 +117,7 @@ Tables ->
 	      ("C-e r" . 'eglot-rename)
 	      ("C-e h" . 'eldoc)
 	      ("C-e g d" . 'xref-find-definitions))
-  :config ())
+  :config (setq eglot-ignored-server-capabilities :documentHighlightProvider))
 
 
 (add-to-list 'eglot-server-programs `(erlang-mode  ,(getenv "LSP_ERLANG") "--transport" "stdio"))
