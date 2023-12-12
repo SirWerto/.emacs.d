@@ -112,18 +112,16 @@ Tables ->
 (use-package eglot
   :demand t
   :init (setq lsp-folder (getenv "LSP_FOLDER"))
-  :bind (
-	 :map evil-normal-state-map
+  :bind (:map evil-normal-state-map
 	      ("C-e r" . 'eglot-rename)
 	      ("C-e h" . 'eldoc)
 	      ("C-e g d" . 'xref-find-definitions))
-  :config (setq eglot-ignored-server-capabilities :documentHighlightProvider))
-
-
-(add-to-list 'eglot-server-programs `(erlang-mode  ,(getenv "LSP_ERLANG") "--transport" "stdio"))
-(add-to-list 'eglot-server-programs `(elixir-mode ,(getenv "LSP_ELIXIR")))
-(add-to-list 'eglot-server-programs `(scala-mode , (concat lsp-folder "/" "metals")))
-(add-to-list 'eglot-server-programs `(python-mode ,(concat lsp-folder "/" "pyright") "--stdio"))
+  :config
+  (setq eglot-ignored-server-capabilities :documentHighlightProvider)
+  (add-to-list 'eglot-server-programs `(erlang-mode  ,(getenv "LSP_ERLANG") "--transport" "stdio"))
+  (add-to-list 'eglot-server-programs `(elixir-mode ,(getenv "LSP_ELIXIR")))
+  (add-to-list 'eglot-server-programs `(scala-mode , (concat lsp-folder "/" "metals")))
+  (add-to-list 'eglot-server-programs `(python-mode ,(concat lsp-folder "/" "pyright") "--stdio")))
 
 
 
