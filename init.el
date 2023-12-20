@@ -117,7 +117,7 @@ Tables ->
 	      ("C-e h" . 'eldoc)
 	      ("C-e g d" . 'xref-find-definitions))
   :config
-  (setq eglot-ignored-server-capabilities :documentHighlightProvider)
+  (setq eglot-ignored-server-capabilities `(:documentHighlightProvider))
   (add-to-list 'eglot-server-programs `(erlang-mode  ,(getenv "LSP_ERLANG") "--transport" "stdio"))
   (add-to-list 'eglot-server-programs `(elixir-mode ,(getenv "LSP_ELIXIR")))
   (add-to-list 'eglot-server-programs `(scala-mode , (concat lsp-folder "/" "metals")))
