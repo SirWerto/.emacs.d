@@ -103,8 +103,8 @@ Tables ->
 (use-package scala-mode)
 ;; Python
 (use-package python-mode)
-(use-package py-autopep8
-  :hook ((python-mode) . py-autopep8-mode))
+;; (use-package py-autopep8
+;;   :hook ((python-mode) . py-autopep8-mode))
 
 
 
@@ -120,9 +120,13 @@ Tables ->
   (setq eglot-ignored-server-capabilities `(:documentHighlightProvider))
   (add-to-list 'eglot-server-programs `(erlang-mode  ,(getenv "LSP_ERLANG") "--transport" "stdio"))
   (add-to-list 'eglot-server-programs `(elixir-mode ,(getenv "LSP_ELIXIR")))
-  (add-to-list 'eglot-server-programs `(scala-mode , (concat lsp-folder "/" "metals")))
-  (add-to-list 'eglot-server-programs `(python-mode ,(concat lsp-folder "/" "pyright") "--stdio")))
+  (add-to-list 'eglot-server-programs `(scala-mode , (concat lsp-folder "/" "metals"))))
+  ;;(add-to-list 'eglot-server-programs `(python-mode ,(concat lsp-folder "/" "pyright") "--stdio")))
 
+
+(use-package envrc
+  :config
+  (envrc-global-mode))
 
 
 ;;;; Example
