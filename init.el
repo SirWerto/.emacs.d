@@ -59,6 +59,7 @@
 (setq show-paren-delay 0)
 
 ;; Org :)
+(use-package org-roam-ui)
 (use-package org-roam
   :init
   (setq org-roam-directory (file-truename "~/hive-mind"))
@@ -130,17 +131,22 @@ Tables ->
 ;; Emacs COPILOT
 (if is-home-station
    (use-package gptel
-     :bind (("C-c c o" . 'gptel-send)))
-)
+     :config
+     (setq
+      gptel-model "codellama:latest"
+      gptel-backend (gptel-make-ollama "Ollama"
+                      :host "localhost:11434"
+                      :stream t
+                      :models '("codellama:latest")))
+     :bind (("C-c c o s" . 'gptel-send)
+	    ("C-c c o m" . 'gptel-menu))
+     )
+  )
 
 
 (use-package envrc
   :config
   (envrc-global-mode))
-
-
-;;;; Example
-;; export LSP_ELIXIR="path/to/elixir-ls-1.14-25.1/language_server.sh"
 
 ;;;; Fancy
 ;; Themes
