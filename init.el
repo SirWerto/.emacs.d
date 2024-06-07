@@ -106,6 +106,7 @@ Tables ->
 (use-package scala-mode)
 ;; Python
 (use-package python-mode)
+(use-package pip-requirements)
 (use-package py-autopep8
   :hook ((python-mode) . py-autopep8-mode))
 
@@ -125,6 +126,29 @@ Tables ->
   (add-to-list 'eglot-server-programs `(elixir-mode ,(getenv "LSP_ELIXIR")))
   (add-to-list 'eglot-server-programs `(scala-mode , (concat lsp-folder "/" "metals"))))
   ;;(add-to-list 'eglot-server-programs `(python-mode ,(concat lsp-folder "/" "pyright") "--stdio")))
+
+;; Emacs DAP
+(use-package dap-mode
+  :config
+  (dap-ui-mode 1)
+  ;; enables mouse hover support
+  (dap-tooltip-mode 1)
+  ;; use tooltips for mouse hover
+  ;; if it is not enabled `dap-mode' will use the minibuffer.
+  (tooltip-mode 1)
+  ;; displays floating panel with debug buttons
+  ;; requies emacs 26+
+  (dap-ui-controls-mode 1)
+
+  ;; Lenguages
+  ;; Erlang
+  (require 'dap-erlang)
+  ;; Elixir
+  (require 'dap-elixir)
+  ;; Python
+  (require 'dap-python)
+  (setq dap-python-debugger 'debugpy)
+  )
 
 
 
