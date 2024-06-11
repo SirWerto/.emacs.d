@@ -122,7 +122,7 @@ Tables ->
 	      ("C-e g d" . 'xref-find-definitions))
   :config
   (setq eglot-ignored-server-capabilities `(:documentHighlightProvider))
-  (add-to-list 'eglot-server-programs `(erlang-mode  , (concat lsp-folder "/" "elp"))
+  (add-to-list 'eglot-server-programs `(erlang-mode  , (concat lsp-folder "/" "elp")))
   (add-to-list 'eglot-server-programs `(elixir-mode , (file-symlink-p (concat lsp-folder "/" "start_lexical.sh"))))
   (add-to-list 'eglot-server-programs `(scala-mode , (concat lsp-folder "/" "metals"))))
   ;;(add-to-list 'eglot-server-programs `(python-mode ,(concat lsp-folder "/" "pyright") "--stdio")))
