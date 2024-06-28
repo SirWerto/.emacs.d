@@ -23,6 +23,11 @@
 (keymap-global-set "C-l" 'evil-force-normal-state)
 (evil-mode 1)
 
+;;;;;; EVIL COLLECTION
+(if (package-installed-p 'evil-collection) (require 'evil-collection) (package-vc-install 'evil-collection))
+(with-eval-after-load 'magit (evil-collection-magit-setup))
+
+
 
 ;;;; MAGIT
 (if (package-installed-p 'magit) (require 'magit) (package-vc-install 'magit))
