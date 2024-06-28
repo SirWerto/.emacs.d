@@ -33,7 +33,9 @@
   (evil-collection-init)
   (setq evil-collection-mode-list '(mu4e)))
 
-(use-package magit)
+(use-package magit
+  :bind (("C-c m k l" . magit-smerge-keep-lower)
+	 ("C-c m k u" . magit-smerge-keep-upper)))
 
 
 (use-package projectile
