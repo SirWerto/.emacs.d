@@ -28,6 +28,12 @@
 (with-eval-after-load 'magit (evil-collection-magit-setup))
 
 
+;;;;;; EVIL EASYMOTION
+(if (package-installed-p 'evil-easymotion) (require 'evil-easymotion) (package-vc-install 'evil-easymotion))
+(evilem-default-keybindings "SPC")
+
+
+
 
 ;;;; MAGIT
 (if (package-installed-p 'magit) (require 'magit) (package-vc-install 'magit))
@@ -168,11 +174,17 @@ Tables ->
 
 
 ;; Fancy
+
+(if (package-installed-p 'highlight-indentation) (require 'highlight-indentation) (package-vc-install 'highlight-indentation))
+(add-hook 'python-mode-hook 'highlight-indentation-current-column-mode)
+(set-face-background 'highlight-indentation-current-column-face "#45413b")
+
 ;;;; Themes
 
 (if (package-installed-p 'solo-jazz-theme) (require 'solo-jazz-theme) (package-vc-install 'solo-jazz-theme))
 (if (package-installed-p 'badwolf-theme) (require 'badwolf-theme) (package-vc-install 'badwolf-theme))
 (load-theme 'badwolf t)
+
 
 (if (package-installed-p 'dashboard) (require 'dashboard) (package-vc-install 'dashboard))
 (dashboard-setup-startup-hook)
