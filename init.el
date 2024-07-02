@@ -130,7 +130,7 @@ Tables ->
 
 ;;;; COPILOT
 (if is-home-station
-    (
+    (progn
      (if (package-installed-p 'gptel) (require 'gptel) (package-vc-install 'gptel))
      (setq
       gptel-model "codellama:latest"
