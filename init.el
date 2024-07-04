@@ -63,6 +63,20 @@
 
 
 ;;;; ORG
+(setq org-agenda-files `(,(file-truename "~/hive-mind/knowledge") ,(file-truename "~/hive-mind-bbva/daily") ,(file-truename "~/hive-mind-bbva/knowledge")))
+(setq org-agenda-inhibit-startup t)
+
+(keymap-global-set "C-c o l" 'org-store-link)
+(keymap-global-set "C-c o a" 'org-agenda)
+(keymap-global-set "C-c o c" 'org-capture)
+
+;; should be defined once on startup
+(add-hook 'org-agenda-mode-hook
+	  (lambda ()
+	   (keymap-set org-agenda-mode-map "j" 'evil-next-line)
+	   (keymap-set org-agenda-mode-map "k" 'evil-previous-line)))
+
+;;;;;; ORG ROAM
 (setq org-roam-directory (file-truename "~/hive-mind"))
 (setq org-roam-dailies-directory "daily/")
 (setq org-roam-dailies-capture-templates
