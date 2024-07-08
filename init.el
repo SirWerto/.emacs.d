@@ -63,7 +63,10 @@
 
 
 ;;;; ORG
-(setq org-agenda-files `(,(file-truename "~/hive-mind/knowledge") ,(file-truename "~/hive-mind-bbva/daily") ,(file-truename "~/hive-mind-bbva/knowledge")))
+(setq org-agenda-files `(,(file-truename "~/hive-mind/knowledge")))
+
+(unless is-home-station (append org-agenda-files `(,(file-truename "~/hive-mind-bbva/daily") ,(file-truename "~/hive-mind-bbva/knowledge"))))
+
 (setq org-agenda-inhibit-startup t)
 
 (keymap-global-set "C-c o l" 'org-store-link)
