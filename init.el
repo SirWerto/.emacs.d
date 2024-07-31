@@ -123,6 +123,14 @@ Tables ->
 (if (package-installed-p 'erlang) (require 'erlang) (package-vc-install 'erlang))
 ;;;; Elixir
 (if (package-installed-p 'elixir-mode) (require 'elixir-mode) (package-vc-install 'elixir-mode))
+;;;; C
+(if (package-installed-p 'clang-format) (require 'clang-format) (package-vc-install 'clang-format))
+(add-hook 'c-mode-hook
+          (lambda ()
+            (if c-buffer-is-cc-mode
+                (add-hook 'before-save-hook #'clang-format-buffer nil 'local)
+              (remove-hook 'before-save-hook #'clang-format-buffer 'local))))
+
 ;;;; Scala
 (if (package-installed-p 'scala-mode) (require 'scala-mode) (package-vc-install 'scala-mode))
 ;;;; Python
@@ -137,6 +145,7 @@ Tables ->
 (require 'eglot)
 (setq eglot-ignored-server-capabilities `(:documentHighlightProvider))
 
+(add-to-list 'eglot-server-programs `(c-mode  , (concat lsp-folder "/" "clangd")))
 (add-to-list 'eglot-server-programs `(erlang-mode  , (concat lsp-folder "/" "elp")))
 (add-to-list 'eglot-server-programs `(elixir-mode , (file-symlink-p (concat lsp-folder "/" "start_lexical.sh"))))
 (add-to-list 'eglot-server-programs `(scala-mode , (concat lsp-folder "/" "metals")))
