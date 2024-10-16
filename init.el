@@ -63,11 +63,19 @@
 
 
 ;;;; ORG
-(setq org-agenda-files `(,(file-truename "~/hive-mind/knowledge")))
-
-(unless is-home-station (append org-agenda-files `(,(file-truename "~/hive-mind-bbva/daily") ,(file-truename "~/hive-mind-bbva/knowledge"))))
-
 (setq org-agenda-inhibit-startup t)
+
+(setq agenda-files-at-work `(,(file-truename "~/hive-mind-bbva/daily") ,(file-truename "~/hive-mind-bbva/knowledge")))
+(setq org-agenda-files (append `(,(file-truename "~/hive-mind/knowledge")) (unless is-home-station agenda-files-at-work)))
+
+(setq org-todo-keywords '((sequence "TODO" "IN PROGRESS" "BLOCKED" "BLOCKED TO VERIFY" "|" "DONE")))
+;; (setq org-todo-keyword-faces '(
+;; 			       ("TODO" . (:background "#CAC9C7" :foreground "#9A9896" :weight bold))
+;; 			       ("IN PROGRESS" . "#D3E5EF")
+;; 			       ("BLOCKED" . (:background "red" :foreground "black" :weight bold))
+;; 			       ("DONE" . (:background "green" :foreground "black" :weight bold))
+;; 			       ("BLOCKED TO VERIFY" . (:background "purple" :foreground "black" :weight bold))))
+
 
 (keymap-global-set "C-c o l" 'org-store-link)
 (keymap-global-set "C-c o a" 'org-agenda)
@@ -119,6 +127,10 @@ Tables ->
 
 ;; DEVELOPMENT
 
+;;;; Emacs Lisp
+(setq pp-max-width 120)
+
+
 ;;;; Erlang
 (if (package-installed-p 'erlang) (require 'erlang) (package-vc-install 'erlang))
 ;;;; Elixir
@@ -152,7 +164,8 @@ Tables ->
 
 (keymap-global-set "C-c e r" 'eglot-rename)
 (keymap-global-set "C-c e h" 'eldoc)
-(keymap-global-set "C-c e d" 'xref-find-definitions)
+(keymap-global-set "C-c e f d" 'xref-find-definitions)
+(keymap-global-set "C-c e f r" 'xref-find-references)
 
 ;;;; COPILOT
 (if is-home-station
