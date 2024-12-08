@@ -19,7 +19,6 @@
 ;;;; EVIL
 (setq evil-want-keybinding 'nil)
 (if (package-installed-p 'evil) (require 'evil) (package-vc-install 'evil))
-;;(define-key evil-insert-state-map "C-l" 'evil-force-normal-state)
 (keymap-global-set "C-l" 'evil-force-normal-state)
 (evil-mode 1)
 
@@ -113,11 +112,12 @@ Tables ->
 	  :unnarrowed t)
 	 )
 	)
-(org-roam-db-autosync-mode)
 
 
 (if (package-installed-p 'org-roam-ui) (require 'org-roam-ui) (package-vc-install 'org-roam-ui))
 (if (package-installed-p 'org-roam) (require 'org-roam) (package-vc-install 'org-roam))
+
+(org-roam-db-autosync-mode)
 
 (keymap-global-set "C-c o r i" 'org-roam-node-insert)
 (keymap-global-set "C-c o r f" 'org-roam-node-find)
@@ -132,7 +132,7 @@ Tables ->
 
 
 ;;;; Erlang
-(if (package-installed-p 'erlang) (require 'erlang) (package-vc-install 'erlang))
+;;(if (package-installed-p 'erlang) (require 'erlang) (package-vc-install 'erlang))
 ;;;; Elixir
 (if (package-installed-p 'elixir-mode) (require 'elixir-mode) (package-vc-install 'elixir-mode))
 ;;;; C
@@ -148,10 +148,22 @@ Tables ->
 ;;;; Python
 (if (package-installed-p 'python-mode) (require 'python-mode) (package-vc-install 'python-mode))
 (if (package-installed-p 'pip-requirements) (require 'pip-requirements) (package-vc-install 'pip-requirements))
-(if (package-installed-p 'py-autopep8) (require 'py-autopep8) (package-vc-install 'py-autopep8))
-(add-hook 'python-mode-hook 'py-autopep8-mode)
-(unintern 'py-comment-region)
-(unintern 'py-uncomment)
+
+;;;; Python formatter
+(if (not is-home-station)
+    (progn
+      (if (package-installed-p 'py-autopep8) (require 'py-autopep8) (package-vc-install 'py-autopep8))
+      (add-hook 'python-mode-hook 'py-autopep8-mode)
+      (unintern 'py-comment-region)
+      (unintern 'py-uncomment))
+  (progn
+    (if (package-installed-p 'ruff-format) (require 'ruff-format) (package-vc-install 'ruff-format))
+    (add-hook 'python-mode-hook 'ruff-format-on-save-mode)))
+
+
+
+
+
 
 ;;;; LSP -> EGLOT
 (require 'eglot)
