@@ -93,7 +93,20 @@
 	'(("d" "default" entry
            "* %?"
            :target (file+head "%<%Y-%m-%d>.org"
-                              "#+title: %<%Y-%m-%d>\n"))))
+                              "#+title: %<%Y-%m-%d>\n"))
+;; 	  ("j" "job template" entry
+;;            "%?
+;; * Movements %(org-set-tags \"movements\")
+
+;; * Forecasting %(org-set-tags \"forecasting\")
+
+;; * Reuniones 
+
+;; * Other %(org-set-tags \"notes\")
+;; "
+;;            :target (file+head "%<%Y-%m-%d>.org"
+;;                               "#+title: %<%Y-%m-%d>\n"))
+	  ))
 (setq org-roam-capture-templates
 	'
 	(
@@ -102,14 +115,14 @@
 ")
 	  :unnarrowed t)
 
-	 ("f" "table field" plain "%?" :target
-	  (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}
+;; 	 ("f" "table field" plain "%?" :target
+;; 	  (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}
 
 
-Tables ->
-")
+;; Tables ->
+;; ")
 
-	  :unnarrowed t)
+;; 	  :unnarrowed t)
 	 )
 	)
 
