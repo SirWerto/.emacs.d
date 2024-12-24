@@ -148,13 +148,17 @@
 ;;(if (package-installed-p 'erlang) (require 'erlang) (package-vc-install 'erlang))
 ;;;; Elixir
 (if (package-installed-p 'elixir-mode) (require 'elixir-mode) (package-vc-install 'elixir-mode))
+(add-hook 'elixir-mode-hook (lambda () (add-hook 'after-save-hook #'mix-format nil t)))
+
 ;;;; C
 (if (package-installed-p 'clang-format) (require 'clang-format) (package-vc-install 'clang-format))
-(add-hook 'c-mode-hook
-          (lambda ()
-            (if c-buffer-is-cc-mode
-                (add-hook 'before-save-hook #'clang-format-buffer nil 'local)
-              (remove-hook 'before-save-hook #'clang-format-buffer 'local))))
+(add-hook 'c-mode-hook (lambda () (add-hook 'after-save-hook #'clang-format-buffer nil t)))
+
+;; (add-hook 'c-mode-hook
+;;           (lambda ()
+;;             (if c-buffer-is-cc-mode
+;;                 (add-hook 'before-save-hook #'clang-format-buffer nil 'local)
+;;               (remove-hook 'before-save-hook #'clang-format-buffer 'local))))
 
 ;;;; Scala
 (if (package-installed-p 'scala-mode) (require 'scala-mode) (package-vc-install 'scala-mode))
@@ -163,15 +167,19 @@
 (if (package-installed-p 'pip-requirements) (require 'pip-requirements) (package-vc-install 'pip-requirements))
 
 ;;;; Python formatter
-(if (not is-home-station)
-    (progn
-      (if (package-installed-p 'py-autopep8) (require 'py-autopep8) (package-vc-install 'py-autopep8))
-      (add-hook 'python-mode-hook 'py-autopep8-mode)
-      (unintern 'py-comment-region)
-      (unintern 'py-uncomment))
-  (progn
-    (if (package-installed-p 'ruff-format) (require 'ruff-format) (package-vc-install 'ruff-format))
-    (add-hook 'python-mode-hook 'ruff-format-on-save-mode)))
+(if (package-installed-p 'py-autopep8) (require 'py-autopep8) (package-vc-install 'py-autopep8))
+(unintern 'py-comment-region)
+(unintern 'py-uncomment)
+(if (package-installed-p 'ruff-format) (require 'ruff-format) (package-vc-install 'ruff-format))
+
+;; (defun ruff-lint-format ()
+;;   "Run ruff linter an formatter in a shell."
+;;   (shell-command "ruff check --fix; ruff format"))
+
+
+(if is-home-station
+    (add-hook 'python-mode-hook 'ruff-format-on-save-mode)
+  (add-hook 'python-mode-hook 'py-autopep8-mode))
 
 
 
@@ -185,7 +193,6 @@
 (add-to-list 'eglot-server-programs `(c-mode  , (concat lsp-folder "/" "clangd")))
 (add-to-list 'eglot-server-programs `(erlang-mode  , (concat lsp-folder "/" "elp")))
 (add-to-list 'eglot-server-programs `(elixir-mode , (file-symlink-p (concat lsp-folder "/" "start_lexical.sh"))))
-(add-to-list 'eglot-server-programs `(scala-mode , (concat lsp-folder "/" "metals")))
 
 (keymap-global-set "C-c e r" 'eglot-rename)
 (keymap-global-set "C-c e h" 'eldoc)
@@ -278,3 +285,4 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file) (write-region "" nil custom-file))
 (load custom-file)
+
