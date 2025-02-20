@@ -140,6 +140,13 @@
 
 ;; DEVELOPMENT
 
+
+;;;; SQL
+(if (package-installed-p 'sqlformat) (require 'sqlformat) (package-vc-install 'sqlformat))
+(setq sqlformat-command 'sqlfluff)
+(setq sqlformat-args '("--dialect=athena"))
+(add-hook 'sql-mode-hook 'sqlformat-on-save-mode)
+
 ;;;; Emacs Lisp
 (setq pp-max-width 120)
 
@@ -198,6 +205,7 @@
 (keymap-global-set "C-c e h" 'eldoc)
 (keymap-global-set "C-c e f d" 'xref-find-definitions)
 (keymap-global-set "C-c e f r" 'xref-find-references)
+(keymap-global-set "C-c e c a" 'eglot-code-actions)
 
 ;;;; COPILOT
 (if is-home-station
