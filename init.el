@@ -51,9 +51,8 @@
 (global-company-mode 1)
 
 
-;;;; IVY
-(if (package-installed-p 'ivy) (require 'ivy) (package-vc-install 'ivy))
-(ivy-mode 1)
+
+
 
 
 ;;;; ENVRC
@@ -61,10 +60,24 @@
 (add-hook 'after-init-hook 'envrc-global-mode)
 
 
-;;;; ORG
-(setq org-agenda-inhibit-startup t)
+;;;;;; AUTOCOMPLETION
 
-(setq agenda-files-at-work `(,(file-truename "~/hive-mind-bbva/daily") ,(file-truename "~/hive-mind-bbva/knowledge")))
+;;;; IVY
+(if (package-installed-p 'ivy) (require 'ivy) (package-vc-install 'ivy))
+(ivy-mode 1)
+
+
+;; ;;;; Vertico
+;; (if (package-installed-p 'vertico) (require 'vertico) (package-vc-install 'vertico))
+;; (vertico-mode 1)
+;;;;;; AUTOCOMPLETION END
+
+
+;;;; ORG
+;;(setq org-agenda-inhibit-startup t)
+
+(load-library "find-lisp")
+(setq agenda-files-at-work (find-lisp-find-files "~/hive-mind-bbva" "\.org$"))
 (setq org-agenda-files (append `(,(file-truename "~/hive-mind/knowledge")) (unless is-home-station agenda-files-at-work)))
 
 (setq org-todo-keywords '((sequence "TODO" "IN PROGRESS" "BLOCKED" "BLOCKED TO VERIFY" "|" "DONE")))
@@ -144,7 +157,7 @@
 ;;;; SQL
 (if (package-installed-p 'sqlformat) (require 'sqlformat) (package-vc-install 'sqlformat))
 (setq sqlformat-command 'sqlfluff)
-(setq sqlformat-args '("--dialect=athena"))
+(setq sqlformat-args '("--dialect=athena" "--verbose"))
 (add-hook 'sql-mode-hook 'sqlformat-on-save-mode)
 
 ;;;; Emacs Lisp
@@ -206,6 +219,7 @@
 (keymap-global-set "C-c e f d" 'xref-find-definitions)
 (keymap-global-set "C-c e f r" 'xref-find-references)
 (keymap-global-set "C-c e c a" 'eglot-code-actions)
+(keymap-global-set "C-c e r" 'eglot-format-buffer)
 
 ;;;; COPILOT
 (if is-home-station
