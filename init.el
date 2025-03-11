@@ -15,12 +15,27 @@
 (setq lsp-folder (getenv "LSP_FOLDER"))
 
 
+
+
+
+;; LIB PACKAGES
+;;;; DASH
+(if (package-installed-p 'dash) (require 'dash) (package-vc-install 'dash))
+
 ;; GENERAL PACKAGES
 ;;;; EVIL
 (setq evil-want-keybinding 'nil)
 (if (package-installed-p 'evil) (require 'evil) (package-vc-install 'evil))
 (keymap-global-set "C-l" 'evil-force-normal-state)
 (evil-mode 1)
+
+(defun evil-global-set-key-states (states key def)
+  "Bind KEY to DEF in STATES."
+  (mapc (lambda (state) (evil-global-set-key state key def)) states))
+
+(defun evil-all-global-set-key (key def)
+  "Bind KEY to DEF in all states but Emacs."
+  (evil-global-set-key-states '(normal insert visual replace operator motion) key def))
 
 ;;;;;; EVIL COLLECTION
 (if (package-installed-p 'evil-collection) (require 'evil-collection) (package-vc-install 'evil-collection))
@@ -36,14 +51,13 @@
 
 ;;;; MAGIT
 (if (package-installed-p 'magit) (require 'magit) (package-vc-install 'magit))
-(keymap-global-set "C-c m k l" 'magit-smerge-keep-lower)
-(keymap-global-set "C-c m k u" 'magit-smerge-keep-upper)
 
 
 ;;;; PROJECTILE
 (if (package-installed-p 'projectile) (require 'projectile) (package-vc-install 'projectile))
-(keymap-global-set "C-c p" 'projectile-command-map)
+(evil-all-global-set-key (kbd "C-c p") 'projectile-command-map)
 (projectile-mode 1)
+
 
 
 ;;;; COMPANY
@@ -76,9 +90,34 @@
 ;;;; ORG
 ;;(setq org-agenda-inhibit-startup t)
 
+;; TODO -> load only one month in startup and then load the rest if needed
+;; TODO -> clean daily files programaticaly
 (load-library "find-lisp")
-(setq agenda-files-at-work (find-lisp-find-files "~/hive-mind-bbva" "\.org$"))
-(setq org-agenda-files (append `(,(file-truename "~/hive-mind/knowledge")) (unless is-home-station agenda-files-at-work)))
+(setq agenda-files-at-home `(,(file-truename "~/hive-mind/knowledge")))
+;; ;;(setq agenda-files-at-work (find-lisp-find-files "~/hive-mind-bbva" "\.org$"))
+;; ;;(setq agenda-files-at-work (find-lisp-find-files "~/hive-mind-bbva" "\.org$"))
+
+(setq agenda-files-at-work (
+				--split-with
+				(string-match-p "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\.org" it)
+				(if is-home-station '() (find-lisp-find-files "~/hive-mind-bbva" "\.org$"))))
+(setq agenda-files-at-work-knowledge (nth 0 agenda-files-at-work))
+(setq agenda-files-at-work-dailies (nth 1 agenda-files-at-work))
+
+
+
+(setq agenda-files-on-startup (append
+			       agenda-files-at-home
+			       agenda-files-at-work-knowledge
+			       ))
+
+(setq agenda-files-on-demand 1)
+
+(setq org-agenda-files (sort agenda-files-on-startup '<))
+
+
+;; ;;(setq org-agenda-files (sort `(append `(,(file-truename "~/hive-mind/knowledge")) (unless is-home-station agenda-files-at-work)) '<))
+;; (setq org-agenda-files (sort (append agenda-files-base agenda-files-at-work) '<))
 
 (setq org-todo-keywords '((sequence "TODO" "IN PROGRESS" "BLOCKED" "BLOCKED TO VERIFY" "|" "DONE")))
 ;; (setq org-todo-keyword-faces '(
@@ -88,7 +127,6 @@
 ;; 			       ("DONE" . (:background "green" :foreground "black" :weight bold))
 ;; 			       ("BLOCKED TO VERIFY" . (:background "purple" :foreground "black" :weight bold))))
 
-
 (keymap-global-set "C-c o l" 'org-store-link)
 (keymap-global-set "C-c o a" 'org-agenda)
 (keymap-global-set "C-c o c" 'org-capture)
@@ -96,8 +134,8 @@
 ;; should be defined once on startup
 (add-hook 'org-agenda-mode-hook
 	  (lambda ()
-	   (keymap-set org-agenda-mode-map "j" 'evil-next-line)
-	   (keymap-set org-agenda-mode-map "k" 'evil-previous-line)))
+	   (evil-local-set-key 'emacs (kbd "j") 'evil-next-line)
+	   (evil-local-set-key 'emacs (kbd "k") 'evil-previous-line)))
 
 ;;;;;; ORG ROAM
 (setq org-roam-directory (file-truename "~/hive-mind"))
@@ -246,6 +284,7 @@
 (require 'dap-elixir)
 (require 'dap-python)
 (setq dap-python-debugger 'debugpy)
+
 
 
 
