@@ -5,9 +5,7 @@
 
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
-(package-refresh-contents)
 
 
 ;; INITIAL VARIABLES
@@ -16,37 +14,36 @@
 
 
 
+;; (setq you-know '(combobulate
+;; 			:url "https://github.com/mickeynp/combobulate.git"
+;; 			:branch "59b64d66d66eb84da6a2cedd152b1692378af674"))
+
+;; (package-vc-install you-know)
 
 
-;; LIB PACKAGES
-;;;; DASH
-(if (package-installed-p 'dash) (require 'dash) (package-vc-install 'dash))
+
+;; Paths & packages
+
+(add-to-list 'load-path "~/.emacs.d/sw")
+(add-to-list 'load-path "~/.emacs.d/sw/modes")
+
+
+
+
+
 
 ;; GENERAL PACKAGES
-;;;; EVIL
-(setq evil-want-keybinding 'nil)
-(if (package-installed-p 'evil) (require 'evil) (package-vc-install 'evil))
-(keymap-global-set "C-l" 'evil-force-normal-state)
-(evil-mode 1)
-
-(defun evil-global-set-key-states (states key def)
-  "Bind KEY to DEF in STATES."
-  (mapc (lambda (state) (evil-global-set-key state key def)) states))
-
-(defun evil-all-global-set-key (key def)
-  "Bind KEY to DEF in all states but Emacs."
-  (evil-global-set-key-states '(normal insert visual replace operator motion) key def))
-
-;;;;;; EVIL COLLECTION
-(if (package-installed-p 'evil-collection) (require 'evil-collection) (package-vc-install 'evil-collection))
-(with-eval-after-load 'magit (evil-collection-magit-setup))
 
 
-;;;;;; EVIL EASYMOTION
-(if (package-installed-p 'evil-easymotion) (require 'evil-easymotion) (package-vc-install 'evil-easymotion))
-(evilem-default-keybindings "SPC")
 
 
+;;;; Libs
+(require 'sw-libs)
+;;;; Modes
+(require 'sw-evil)
+(require 'sw-evil-easymotion)
+(require 'sw-org)
+(require 'sw-eglot)
 
 
 ;;;; MAGIT
@@ -87,105 +84,7 @@
 ;;;;;; AUTOCOMPLETION END
 
 
-;;;; ORG
-;;(setq org-agenda-inhibit-startup t)
 
-;; TODO -> load only one month in startup and then load the rest if needed
-;; TODO -> clean daily files programaticaly
-(load-library "find-lisp")
-(setq agenda-files-at-home `(,(file-truename "~/hive-mind/knowledge")))
-;; ;;(setq agenda-files-at-work (find-lisp-find-files "~/hive-mind-bbva" "\.org$"))
-;; ;;(setq agenda-files-at-work (find-lisp-find-files "~/hive-mind-bbva" "\.org$"))
-
-(setq agenda-files-at-work (
-				--split-with
-				(string-match-p "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\.org" it)
-				(if is-home-station '() (find-lisp-find-files "~/hive-mind-bbva" "\.org$"))))
-(setq agenda-files-at-work-knowledge (nth 0 agenda-files-at-work))
-(setq agenda-files-at-work-dailies (nth 1 agenda-files-at-work))
-
-
-
-(setq agenda-files-on-startup (append
-			       agenda-files-at-home
-			       agenda-files-at-work-knowledge
-			       ))
-
-(setq agenda-files-on-demand 1)
-
-(setq org-agenda-files (sort agenda-files-on-startup '<))
-
-
-;; ;;(setq org-agenda-files (sort `(append `(,(file-truename "~/hive-mind/knowledge")) (unless is-home-station agenda-files-at-work)) '<))
-;; (setq org-agenda-files (sort (append agenda-files-base agenda-files-at-work) '<))
-
-(setq org-todo-keywords '((sequence "TODO" "IN PROGRESS" "BLOCKED" "BLOCKED TO VERIFY" "|" "DONE")))
-;; (setq org-todo-keyword-faces '(
-;; 			       ("TODO" . (:background "#CAC9C7" :foreground "#9A9896" :weight bold))
-;; 			       ("IN PROGRESS" . "#D3E5EF")
-;; 			       ("BLOCKED" . (:background "red" :foreground "black" :weight bold))
-;; 			       ("DONE" . (:background "green" :foreground "black" :weight bold))
-;; 			       ("BLOCKED TO VERIFY" . (:background "purple" :foreground "black" :weight bold))))
-
-(keymap-global-set "C-c o l" 'org-store-link)
-(keymap-global-set "C-c o a" 'org-agenda)
-(keymap-global-set "C-c o c" 'org-capture)
-
-;; should be defined once on startup
-(add-hook 'org-agenda-mode-hook
-	  (lambda ()
-	   (evil-local-set-key 'emacs (kbd "j") 'evil-next-line)
-	   (evil-local-set-key 'emacs (kbd "k") 'evil-previous-line)))
-
-;;;;;; ORG ROAM
-(setq org-roam-directory (file-truename "~/hive-mind"))
-(setq org-roam-dailies-directory "daily/")
-(setq org-roam-dailies-capture-templates
-	'(("d" "default" entry
-           "* %?"
-           :target (file+head "%<%Y-%m-%d>.org"
-                              "#+title: %<%Y-%m-%d>\n"))
-;; 	  ("j" "job template" entry
-;;            "%?
-;; * Movements %(org-set-tags \"movements\")
-
-;; * Forecasting %(org-set-tags \"forecasting\")
-
-;; * Reuniones 
-
-;; * Other %(org-set-tags \"notes\")
-;; "
-;;            :target (file+head "%<%Y-%m-%d>.org"
-;;                               "#+title: %<%Y-%m-%d>\n"))
-	  ))
-(setq org-roam-capture-templates
-	'
-	(
-	 ("d" "default" plain "%?" :target
-	  (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}
-")
-	  :unnarrowed t)
-
-;; 	 ("f" "table field" plain "%?" :target
-;; 	  (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}
-
-
-;; Tables ->
-;; ")
-
-;; 	  :unnarrowed t)
-	 )
-	)
-
-
-(if (package-installed-p 'org-roam-ui) (require 'org-roam-ui) (package-vc-install 'org-roam-ui))
-(if (package-installed-p 'org-roam) (require 'org-roam) (package-vc-install 'org-roam))
-
-(org-roam-db-autosync-mode)
-
-(keymap-global-set "C-c o r i" 'org-roam-node-insert)
-(keymap-global-set "C-c o r f" 'org-roam-node-find)
-(keymap-global-set "C-c o r c" 'org-roam-dailies-goto-today)
 
 
 
@@ -244,20 +143,6 @@
 
 
 
-;;;; LSP -> EGLOT
-(require 'eglot)
-(setq eglot-ignored-server-capabilities `(:documentHighlightProvider))
-
-(add-to-list 'eglot-server-programs `(c-mode  , (concat lsp-folder "/" "clangd")))
-(add-to-list 'eglot-server-programs `(erlang-mode  , (concat lsp-folder "/" "elp")))
-(add-to-list 'eglot-server-programs `(elixir-mode , (file-symlink-p (concat lsp-folder "/" "start_lexical.sh"))))
-
-(keymap-global-set "C-c e r" 'eglot-rename)
-(keymap-global-set "C-c e h" 'eldoc)
-(keymap-global-set "C-c e f d" 'xref-find-definitions)
-(keymap-global-set "C-c e f r" 'xref-find-references)
-(keymap-global-set "C-c e c a" 'eglot-code-actions)
-(keymap-global-set "C-c e r" 'eglot-format-buffer)
 
 ;;;; COPILOT
 (if is-home-station
