@@ -44,38 +44,19 @@
 (require 'sw-evil-easymotion)
 (require 'sw-org)
 (require 'sw-eglot)
-
-
-;;;; MAGIT
-(if (package-installed-p 'magit) (require 'magit) (package-vc-install 'magit))
-
-
-;;;; PROJECTILE
-(if (package-installed-p 'projectile) (require 'projectile) (package-vc-install 'projectile))
-(evil-all-global-set-key (kbd "C-c p") 'projectile-command-map)
-(projectile-mode 1)
+(require 'sw-magit)
+(require 'sw-projectile)
+(require 'sw-company)
+(require 'sw-ivy)
+(require 'sw-envrc)
 
 
 
-;;;; COMPANY
-(if (package-installed-p 'company) (require 'company) (package-vc-install 'company))
-(global-company-mode 1)
-
-
-
-
-
-
-;;;; ENVRC
-(if (package-installed-p 'envrc) (require 'envrc) (package-vc-install 'envrc))
-(add-hook 'after-init-hook 'envrc-global-mode)
-
-
-;;;;;; AUTOCOMPLETION
-
-;;;; IVY
-(if (package-installed-p 'ivy) (require 'ivy) (package-vc-install 'ivy))
-(ivy-mode 1)
+;;;; Modes - Lenguages
+(require 'sw-sql)
+(require 'sw-erlang)
+(require 'sw-elixir)
+(require 'sw-c)
 
 
 ;; ;;;; Vertico
@@ -88,34 +69,8 @@
 
 
 
-;; DEVELOPMENT
-
-
-;;;; SQL
-(if (package-installed-p 'sqlformat) (require 'sqlformat) (package-vc-install 'sqlformat))
-(setq sqlformat-command 'sqlfluff)
-(setq sqlformat-args '("--dialect=athena" "--verbose"))
-(add-hook 'sql-mode-hook 'sqlformat-on-save-mode)
-
 ;;;; Emacs Lisp
 (setq pp-max-width 120)
-
-
-;;;; Erlang
-;;(if (package-installed-p 'erlang) (require 'erlang) (package-vc-install 'erlang))
-;;;; Elixir
-(if (package-installed-p 'elixir-mode) (require 'elixir-mode) (package-vc-install 'elixir-mode))
-(add-hook 'elixir-mode-hook (lambda () (add-hook 'after-save-hook #'mix-format nil t)))
-
-;;;; C
-(if (package-installed-p 'clang-format) (require 'clang-format) (package-vc-install 'clang-format))
-(add-hook 'c-mode-hook (lambda () (add-hook 'after-save-hook #'clang-format-buffer nil t)))
-
-;; (add-hook 'c-mode-hook
-;;           (lambda ()
-;;             (if c-buffer-is-cc-mode
-;;                 (add-hook 'before-save-hook #'clang-format-buffer nil 'local)
-;;               (remove-hook 'before-save-hook #'clang-format-buffer 'local))))
 
 ;;;; Scala
 (if (package-installed-p 'scala-mode) (require 'scala-mode) (package-vc-install 'scala-mode))
