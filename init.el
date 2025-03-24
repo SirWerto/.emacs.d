@@ -53,10 +53,13 @@
 
 
 ;;;; Modes - Lenguages
-(require 'sw-sql)
+(require 'sw-emacs-lisp)
 (require 'sw-erlang)
 (require 'sw-elixir)
 (require 'sw-c)
+(require 'sw-scala)
+(require 'sw-python)
+(require 'sw-sql)
 
 
 ;; ;;;; Vertico
@@ -70,13 +73,8 @@
 
 
 ;;;; Emacs Lisp
-(setq pp-max-width 120)
 
-;;;; Scala
-(if (package-installed-p 'scala-mode) (require 'scala-mode) (package-vc-install 'scala-mode))
 ;;;; Python
-(if (package-installed-p 'python-mode) (require 'python-mode) (package-vc-install 'python-mode))
-(if (package-installed-p 'pip-requirements) (require 'pip-requirements) (package-vc-install 'pip-requirements))
 
 ;;;; Python formatter
 (if (package-installed-p 'py-autopep8) (require 'py-autopep8) (package-vc-install 'py-autopep8))
