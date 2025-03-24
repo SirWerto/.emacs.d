@@ -18,4 +18,9 @@
     (add-hook 'python-mode-hook 'ruff-format-on-save-mode)
   (add-hook 'python-mode-hook 'py-autopep8-mode))
 
+(if (package-installed-p 'highlight-indentation) (require 'highlight-indentation) (package-vc-install 'highlight-indentation))
+(add-hook 'python-mode-hook 'highlight-indentation-current-column-mode)
+(set-face-background 'highlight-indentation-current-column-face "#45413b")
+
+
 (provide 'sw-python)
