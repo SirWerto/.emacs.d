@@ -21,6 +21,7 @@
 
 ;; (setq org-agenda-files (sort agenda-files-on-startup '<))
 (setq org-agenda-files agenda-files-on-startup)
+(setq org-agenda-inhibit-startup t)
 
 
 ;; ;;(setq org-agenda-files (sort `(append `(,(file-truename "~/hive-mind/knowledge")) (unless is-home-station agenda-files-at-work)) '<))
@@ -45,7 +46,9 @@
 
 (add-hook 'org-mode-hook
 	  (lambda ()
-	   (evil-local-set-key 'normal (kbd "TAB") 'org-cycle)))
+	    (evil-local-set-key 'normal (kbd "TAB") 'org-cycle)
+	    (evil-local-set-key 'normal (kbd "C-k") 'org-move-subtree-up)
+	    (evil-local-set-key 'normal (kbd "C-j") 'org-move-subtree-down)))
 
 
 
