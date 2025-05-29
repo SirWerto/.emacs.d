@@ -1,4 +1,4 @@
-;;; SW-Eglot --- sw-evil-mode setup 
+;;; SW-Eglot --- sw-evil-mode setup
 
 ;;;; LSP -> EGLOT
 (require 'eglot)
@@ -8,17 +8,20 @@
 ;; (add-to-list 'eglot-server-programs `(erlang-mode  , (concat lsp-folder "/" "elp")))
 ;; (add-to-list 'eglot-server-programs `(elixir-mode , (file-symlink-p (concat lsp-folder "/" "start_lexical.sh"))))
 
+(add-to-list 'eglot-server-programs `(python-mode . ,(eglot-alternatives '(("ty" "server") 
+("pyright-langserver" "--stdio")))))
+
+
+
 (evil-all-global-set-key (kbd "C-c e r") 'eglot-rename)
 (evil-all-global-set-key (kbd "C-c e h") 'eldoc)
 (evil-all-global-set-key (kbd "C-c e f d") 'xref-find-definitions)
 (evil-all-global-set-key (kbd "C-c e f r") 'xref-find-references)
 (evil-all-global-set-key (kbd "C-c e c a") 'eglot-code-actions)
-(evil-all-global-set-key (kbd "C-c e r") 'eglot-format-buffer)
+(evil-all-global-set-key (kbd "C-c e b f") 'eglot-format-buffer)
 
 
-(defun lsp-format-on-save-hook ()
-  "Add hook to format on save with the LSP via eglot."
-  (add-hook 'after-save-hook #'eglot-format-buffer nil t))
+(defun lsp-format-on-save-hook () "Add hook to format on save with the LSP via eglot." (add-hook 'after-save-hook #'eglot-format-buffer nil t))
 
 
 

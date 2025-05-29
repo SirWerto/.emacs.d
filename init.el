@@ -57,6 +57,7 @@
 (require 'sw-scala)
 (require 'sw-python)
 (require 'sw-sql)
+(require 'sw-hocon)
 
 ;;;; Modes - Others
 (require 'sw-pairing)
