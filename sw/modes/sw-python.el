@@ -18,7 +18,7 @@
 ;;;###autoload (autoload 'python-autopep8-format-on-save-mode "current-file" nil t)
 (reformatter-define python-autopep8-format
   :program "autopep8"
-  :args (list input-file)
+  :args (list input-file "--max-line-length=120")
   )
 
 
