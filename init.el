@@ -11,6 +11,9 @@
 ;; INITIAL VARIABLES
 (setq is-home-station (if (getenv "HOMESTATION") t nil))
 (setq lsp-folder (getenv "LSP_FOLDER"))
+(setq emacs-root-dir (getenv "EMACS_ROOT_DIR")) ;; .emacs.d
+(cl-assert emacs-root-dir nil "Environment variable missing: EMACS_ROOT_DIR")
+
 
 
 
@@ -23,6 +26,8 @@
 
 
 ;; Paths & packages
+
+(setq emacs-tools-dir (file-name-concat emacs-root-dir "tools"))
 
 (add-to-list 'load-path "~/.emacs.d/sw")
 (add-to-list 'load-path "~/.emacs.d/sw/modes")
@@ -65,6 +70,10 @@
 ;;;; Fancy
 (require 'sw-themes)
 (require 'sw-dashboard)
+
+
+;;;; Tools
+(require 'sw-mail)
 
 ;; ;;;; Vertico
 ;; (if (package-installed-p 'vertico) (require 'vertico) (package-vc-install 'vertico))
