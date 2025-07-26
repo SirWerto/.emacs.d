@@ -44,13 +44,13 @@
 (require 'sw-evil-easymotion)
 (require 'sw-org)
 (require 'sw-eglot)
+(require 'sw-llm)
 (require 'sw-dap)
 (require 'sw-magit)
 (require 'sw-projectile)
 (require 'sw-company)
 (require 'sw-ivy)
 (require 'sw-envrc)
-(require 'sw-copilot)
 
 
 
