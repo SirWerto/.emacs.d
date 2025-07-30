@@ -8,6 +8,8 @@
 ;; (add-to-list 'eglot-server-programs `(erlang-mode  , (concat lsp-folder "/" "elp")))
 ;; (add-to-list 'eglot-server-programs `(elixir-mode , (file-symlink-p (concat lsp-folder "/" "start_lexical.sh"))))
 
+;;(add-to-list 'eglot-server-programs `(erlang-mode  , ("elp" "server")))
+(add-to-list 'eglot-server-programs (list 'erlang-mode  "elp" "server"))
 (add-to-list 'eglot-server-programs `(python-mode . ,(eglot-alternatives '(("ty" "server") 
 ("pyright-langserver" "--stdio")))))
 
