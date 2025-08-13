@@ -4,7 +4,7 @@
 
 
 (setq main-llm-model "smollm:135m")
-(setq gptel-backend (gptel-make-ollama "Ollama"
+(setq gptel-backend (gptel-make-ollama (concat saposa " to your service")
                  :host "localhost:11434"
                  :stream t
                  :models (list main-llm-model)))
@@ -13,7 +13,6 @@
 
 
 (evil-all-global-set-key (kbd "C-c l l m") 'gptel)
-(evil-all-global-set-key (kbd "C-c l l q s") 'gptel-send)
-(evil-all-global-set-key (kbd "C-c l l q m") 'gptel-menu)
+(evil-all-global-set-key (kbd "C-c l l q") 'gptel-menu)
 
 (provide 'sw-llm)

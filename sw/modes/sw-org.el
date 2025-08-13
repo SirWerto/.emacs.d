@@ -5,6 +5,20 @@
 (if (package-installed-p 'org-roam-ui) (require 'org-roam-ui) (package-vc-install 'org-roam-ui))
 (if (package-installed-p 'org-roam) (require 'org-roam) (package-vc-install 'org-roam))
 
+;;(org-edit-src-exit)
+
+;; (define-advice org-edit-src-exit (:before (&rest _args) format-python)
+;;   "Run `blacken-buffer' on Python code."
+;;   (when (eq major-mode 'python-mode)
+;;     (message "Formatting python code...")
+;;     (blacken-buffer)))
+
+(define-advice org-edit-src-exit (:before (&rest _args) format-sql-org-code-block)
+  "Format sql on sql code block."
+  (when (eq major-mode 'sql-mode)
+    (message "Formatting sql code...")
+    (sqlformat-buffer))
+  )
 
 (load-library "find-lisp")
 (setq agenda-files-at-home `(,(file-truename "~/hive-mind/knowledge")))

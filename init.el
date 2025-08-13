@@ -14,6 +14,10 @@
 (setq emacs-root-dir (getenv "EMACS_ROOT_DIR")) ;; .emacs.d
 (cl-assert emacs-root-dir nil "Environment variable missing: EMACS_ROOT_DIR")
 
+(defconst saposa "Saposa"
+  "The name of my beloved virtual companion."
+  )
+
 
 
 
@@ -45,11 +49,14 @@
 (require 'sw-org)
 (require 'sw-eglot)
 (require 'sw-llm)
+(require 'sw-orderless)
 (require 'sw-dap)
 (require 'sw-magit)
 (require 'sw-projectile)
 (require 'sw-company)
 (require 'sw-ivy)
+;;(require 'sw-vertico)
+;;(require 'sw-corfu)
 (require 'sw-envrc)
 
 
