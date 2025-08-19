@@ -1,8 +1,5 @@
 ;;; SW-LLM --- sw-llm-mode setup 
 
-(if (package-installed-p 'gptel) (require 'gptel) (package-vc-install 'gptel))
-
-
 (setq main-llm-model "smollm:135m")
 (setq gptel-backend (gptel-make-ollama (concat saposa " to your service")
                  :host "localhost:11434"

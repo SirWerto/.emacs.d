@@ -4,20 +4,30 @@
 ;; You may delete these explanatory comments.
 
 
-(require 'package)
-(package-initialize)
-
-
 ;; INITIAL VARIABLES
-(setq is-home-station (if (getenv "HOMESTATION") t nil))
-(setq lsp-folder (getenv "LSP_FOLDER"))
-(setq emacs-root-dir (getenv "EMACS_ROOT_DIR")) ;; .emacs.d
-(cl-assert emacs-root-dir nil "Environment variable missing: EMACS_ROOT_DIR")
+(defvar is-home-station (if (getenv "HOMESTATION") t nil))
+(defvar lsp-folder (getenv "LSP_FOLDER"))
 
 (defconst saposa "Saposa"
   "The name of my beloved virtual companion."
   )
 
+;; Paths & packages
+
+(defvar emacs-root-dir (getenv "EMACS_ROOT_DIR")) ;; .emacs.d
+(cl-assert emacs-root-dir nil "Environment variable missing: EMACS_ROOT_DIR")
+(setq emacs-tools-dir (file-name-concat emacs-root-dir "tools"))
+
+(defvar tools-directory
+  (expand-file-name "tools/" user-emacs-directory)
+  "Directory to store output related to external tools like mail."
+  )
+
+(add-to-list 'load-path "~/.emacs.d/sw")
+(add-to-list 'load-path "~/.emacs.d/sw/modes")
+(add-to-list 'load-path "~/.emacs.d/sw/fancy")
+
+(require 'sw-elpaca)
 
 
 
@@ -29,58 +39,63 @@
 
 
 
-;; Paths & packages
-
-(setq emacs-tools-dir (file-name-concat emacs-root-dir "tools"))
-
-(add-to-list 'load-path "~/.emacs.d/sw")
-(add-to-list 'load-path "~/.emacs.d/sw/modes")
-(add-to-list 'load-path "~/.emacs.d/sw/fancy")
 
 
 ;; GENERAL PACKAGES
 
 ;;;; Libs
-(require 'sw-libs)
+(elpaca dash)
+(elpaca reformatter)
 (require 'sw-settings)
 ;;;; Modes - Basics
-(require 'sw-evil)
-(require 'sw-evil-easymotion)
-(require 'sw-org)
-(require 'sw-eglot)
-(require 'sw-llm)
-(require 'sw-orderless)
-(require 'sw-dap)
-(require 'sw-magit)
-(require 'sw-projectile)
-(require 'sw-company)
-(require 'sw-ivy)
-;;(require 'sw-vertico)
-;;(require 'sw-corfu)
-(require 'sw-envrc)
+
+(setq evil-want-keybinding 'nil)
+(elpaca evil (require 'sw-evil))
+(elpaca evil-collection (require 'sw-evil-collection))
+(elpaca evil-easymotion (require 'sw-evil-easymotion))
+;; TODO:
+;;(add-hook 'elpaca-after-init-hook '(require 'sw-eglot))
+;; Eval eglot after elpacka has finished to install all packages. Because eglot comes with the emacs distribution.
+(elpaca eglot (require 'sw-eglot))
+(elpaca gptel (require 'sw-llm))
+(elpaca org (require 'sw-org))
+(elpaca org-roam (require 'sw-org-roam))
+(elpaca org-roam-ui)
+(elpaca orderless (require 'sw-orderless))
+;;(elpaca dap (require 'sw-dap))
+;;(elpaca transient) just in case magit fails
+(elpaca magit (require 'sw-magit))
+(elpaca projectile (require 'sw-projectile))
+(elpaca company (require 'sw-company))
+(elpaca ivy (require 'sw-ivy))
+;; ;;(require 'sw-vertico)
+;; ;;(require 'sw-corfu)
+(elpaca envrc (require 'sw-envrc))
+(elpaca highlight-indentation)
 
 
 
-;;;; Modes - Lenguages
-(require 'sw-emacs-lisp)
-(require 'sw-erlang)
-(require 'sw-elixir)
-(require 'sw-c)
-(require 'sw-scala)
-(require 'sw-python)
-(require 'sw-sql)
-(require 'sw-hocon)
+;; ;;;; Modes - Lenguages
+;; (require 'sw-emacs-lisp)
+;; (require 'sw-erlang)
+;; (require 'sw-elixir)
+;; (require 'sw-c)
+;; (require 'sw-scala)
+(elpaca python-mode (require 'sw-python))
+;; (require 'sw-sql)
+;; (require 'sw-hocon)
 
-;;;; Modes - Others
-(require 'sw-pairing)
+;; ;;;; Modes - Others
+;; (require 'sw-pairing)
 
-;;;; Fancy
-(require 'sw-themes)
-(require 'sw-dashboard)
+;; ;;;; Fancy
+(elpaca solo-jazz-theme)
+(elpaca badwolf-theme (load-theme 'badwolf t))
+(elpaca dashboard (require 'sw-dashboard))
 
 
-;;;; Tools
-(require 'sw-mail)
+;; ;;;; Tools
+;; (require 'sw-mail)
 
 ;; ;;;; Vertico
 ;; (if (package-installed-p 'vertico) (require 'vertico) (package-vc-install 'vertico))
