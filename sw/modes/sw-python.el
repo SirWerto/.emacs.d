@@ -23,7 +23,7 @@
   (add-hook 'python-mode-hook 'python-autopep8-format-on-save-mode))
 
 (add-hook 'python-mode-hook 'highlight-indentation-current-column-mode)
-(set-face-background 'highlight-indentation-current-column-face "#45413b")
+;;(set-face-background 'highlight-indentation-current-column-face "#45413b")
 
 
 (provide 'sw-python)

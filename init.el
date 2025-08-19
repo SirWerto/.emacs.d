@@ -63,8 +63,8 @@
 (elpaca org-roam-ui)
 (elpaca orderless (require 'sw-orderless))
 ;;(elpaca dap (require 'sw-dap))
-;;(elpaca transient) just in case magit fails
-(elpaca magit (require 'sw-magit))
+(elpaca transient) ;;just in case magit fails
+(elpaca (magit :host github :repo "magit/magit":tag "v4.3.8") (require 'sw-magit))
 (elpaca projectile (require 'sw-projectile))
 (elpaca company (require 'sw-company))
 (elpaca ivy (require 'sw-ivy))
