@@ -2,7 +2,8 @@
 
 ;;;; LSP -> EGLOT
 (require 'eglot)
-(setq eglot-ignored-server-capabilities `(:documentHighlightProvider))
+;; https://github.com/joaotavora/eglot/blob/master/eglot.el#L544
+(setq eglot-ignored-server-capabilities `(:documentHighlightProvider :inlayHintProvider))
 
 ;; (add-to-list 'eglot-server-programs `(c-mode  , (concat lsp-folder "/" "clangd")))
 ;; (add-to-list 'eglot-server-programs `(erlang-mode  , (concat lsp-folder "/" "elp")))
