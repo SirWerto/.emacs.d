@@ -23,6 +23,11 @@
   "Directory to store output related to external tools like mail."
   )
 
+(defvar elpaca-lock-file-path
+  (expand-file-name "lockfile.eld" user-emacs-directory)
+  "Elpaca lock file path."
+  )
+
 (add-to-list 'load-path "~/.emacs.d/sw")
 (add-to-list 'load-path "~/.emacs.d/sw/modes")
 (add-to-list 'load-path "~/.emacs.d/sw/fancy")
