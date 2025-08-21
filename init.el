@@ -83,7 +83,7 @@
 ;; ;;;; Modes - Lenguages
 ;; (require 'sw-emacs-lisp)
 ;; (require 'sw-erlang)
-;; (require 'sw-elixir)
+(elpaca elixir-mode (require 'sw-elixir))
 ;; (require 'sw-c)
 ;; (require 'sw-scala)
 (elpaca python-mode (require 'sw-python))

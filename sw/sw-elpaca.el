@@ -41,4 +41,9 @@
 
 (setq elpaca-lock-file elpaca-lock-file-path)
 
+(defun sw-write-lock-file ()
+  "Writes elpaca-lock-file to elpaca-lock-file-path."
+  (interactive)
+  (elpaca-write-lock-file elpaca-lock-file-path))
+
 (provide 'sw-elpaca)
