@@ -15,7 +15,7 @@
 ;; Paths & packages
 
 (defvar emacs-root-dir (getenv "EMACS_ROOT_DIR")) ;; .emacs.d
-(cl-assert emacs-root-dir nil "Environment variable missing: EMACS_ROOT_DIR")
+;;(cl-assert emacs-root-dir nil "Environment variable missing: EMACS_ROOT_DIR")
 (setq emacs-tools-dir (file-name-concat emacs-root-dir "tools"))
 
 (defvar tools-directory
@@ -59,9 +59,10 @@
 (elpaca evil-collection (require 'sw-evil-collection))
 (elpaca evil-easymotion (require 'sw-evil-easymotion))
 ;; TODO:
-;;(add-hook 'elpaca-after-init-hook '(require 'sw-eglot))
+(defun init-eglot-after-elpaca () (require 'sw-eglot))
+(add-hook 'elpaca-after-init-hook #'init-eglot-after-elpaca)
 ;; Eval eglot after elpacka has finished to install all packages. Because eglot comes with the emacs distribution.
-(elpaca eglot (require 'sw-eglot))
+;;(elpaca eglot (require 'sw-eglot))
 (elpaca gptel (require 'sw-llm))
 (elpaca org (require 'sw-org))
 (elpaca org-roam (require 'sw-org-roam))
@@ -87,6 +88,7 @@
 ;; (require 'sw-c)
 ;; (require 'sw-scala)
 (elpaca python-mode (require 'sw-python))
+(elpaca nix-mode)
 ;; (require 'sw-sql)
 ;; (require 'sw-hocon)
 

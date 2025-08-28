@@ -61,17 +61,6 @@
 		      "elpaca-menu-lock-file" :protocol https :inherit
 		      t :depth treeless :ref
 		      "e5fc08e78223487aa0da12539be1a23356c09ec7"))
- (eglot :source "elpaca-menu-lock-file" :recipe
-	(:package "eglot" :repo
-		  ("https://github.com/emacs-mirror/emacs" . "eglot")
-		  :branch "master" :files
-		  ("lisp/progmodes/eglot.el"
-		   "doc/emacs/doclicense.texi"
-		   "doc/emacs/docstyle.texi" "doc/misc/eglot.texi"
-		   "etc/EGLOT-NEWS" (:exclude ".git"))
-		  :source "elpaca-menu-lock-file" :protocol https
-		  :inherit t :depth treeless :ref
-		  "ab577467e4feb681246a8d28afde729c6040dfc7"))
  (elixir-mode :source "elpaca-menu-lock-file" :recipe
 	      (:package "elixir-mode" :fetcher github :repo
 			"elixir-editors/emacs-elixir" :files
@@ -83,8 +72,8 @@
 			 (:exclude ".dir-locals.el" "test.el"
 				   "tests.el" "*-test.el" "*-tests.el"
 				   "LICENSE" "README*" "*-pkg.el"))
-			:source "MELPA" :protocol https :inherit t
-			:depth treeless :ref
+			:source "elpaca-menu-lock-file" :protocol
+			https :inherit t :depth treeless :ref
 			"00d6580a040a750e019218f9392cf9a4c2dac23a"))
  (elpaca :source
    "elpaca-menu-lock-file" :recipe
@@ -232,6 +221,14 @@
 			  :source "elpaca-menu-lock-file" :protocol
 			  https :inherit t :depth treeless :ref
 			  "5b820a1d1e94649e0f218362286d520d9f29ac2c"))
+ (nix-mode :source "elpaca-menu-lock-file" :recipe
+	   (:package "nix-mode" :fetcher github :repo "NixOS/nix-mode"
+		     :files
+		     (:defaults
+		      (:exclude "nix-company.el" "nix-mode-mmm.el"))
+		     :source "MELPA" :protocol https :inherit t :depth
+		     treeless :ref
+		     "719feb7868fb567ecfe5578f6119892c771ac5e5"))
  (orderless :source "elpaca-menu-lock-file" :recipe
 	    (:package "orderless" :repo "oantolin/orderless" :fetcher
 		      github :files
