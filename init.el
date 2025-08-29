@@ -1,32 +1,32 @@
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-
 
 ;; INITIAL VARIABLES
-(defvar is-home-station (if (getenv "HOMESTATION") t nil))
-(defvar lsp-folder (getenv "LSP_FOLDER"))
+(defconst is-home-station
+  (if (getenv "HOMESTATION") t nil)
+  "Constant to define if I am running on mine or employer's computer."
+  )
 
-(defconst saposa "Saposa"
+(defconst saposa
+  "Saposa"
   "The name of my beloved virtual companion."
   )
 
-;; Paths & packages
+(defconst lsp-folder
+  (getenv "LSP_FOLDER")
+  "Directory to LSPs if exists."
+  )
 
-(defvar emacs-root-dir (getenv "EMACS_ROOT_DIR")) ;; .emacs.d
-;;(cl-assert emacs-root-dir nil "Environment variable missing: EMACS_ROOT_DIR")
-(setq emacs-tools-dir (file-name-concat emacs-root-dir "tools"))
-
-(defvar tools-directory
+(defconst tools-directory
   (expand-file-name "tools/" user-emacs-directory)
   "Directory to store output related to external tools like mail."
   )
 
-(defvar elpaca-lock-file-path
+(defconst elpaca-lock-file-path
   (expand-file-name "lockfile.eld" user-emacs-directory)
   "Elpaca lock file path."
   )
+
+;; Paths & packages
+
 
 (add-to-list 'load-path "~/.emacs.d/sw")
 (add-to-list 'load-path "~/.emacs.d/sw/modes")
@@ -48,18 +48,20 @@
 
 ;; GENERAL PACKAGES
 
+;;;; Function init hooks
+(defun init-eglot-after-elpaca () (require 'sw-eglot))
+
 ;;;; Libs
 (elpaca dash)
 (elpaca reformatter)
 (require 'sw-settings)
-;;;; Modes - Basics
 
+;;;; Modes - Basics
 (setq evil-want-keybinding 'nil)
 (elpaca evil (require 'sw-evil))
-(elpaca evil-collection (require 'sw-evil-collection))
+(elpaca evil-collection)
 (elpaca evil-easymotion (require 'sw-evil-easymotion))
 ;; TODO:
-(defun init-eglot-after-elpaca () (require 'sw-eglot))
 (add-hook 'elpaca-after-init-hook #'init-eglot-after-elpaca)
 ;; Eval eglot after elpacka has finished to install all packages. Because eglot comes with the emacs distribution.
 ;;(elpaca eglot (require 'sw-eglot))
@@ -86,10 +88,10 @@
 ;; (require 'sw-erlang)
 (elpaca elixir-mode (require 'sw-elixir))
 ;; (require 'sw-c)
-;; (require 'sw-scala)
+(elpaca scala-mode)
 (elpaca python-mode (require 'sw-python))
+(elpaca sqlformat (require 'sw-sql))
 (elpaca nix-mode)
-;; (require 'sw-sql)
 ;; (require 'sw-hocon)
 
 ;; ;;;; Modes - Others
@@ -101,8 +103,8 @@
 (elpaca dashboard (require 'sw-dashboard))
 
 
-;; ;;;; Tools
-;; (require 'sw-mail)
+;;;; Tools
+(require 'sw-mail)
 
 ;; ;;;; Vertico
 ;; (if (package-installed-p 'vertico) (require 'vertico) (package-vc-install 'vertico))
