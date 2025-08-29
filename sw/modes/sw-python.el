@@ -1,21 +1,11 @@
 ;;; SW-PYTHON --- sw-python-mode setup 
 
-(if (package-installed-p 'python-mode) (require 'python-mode) (package-vc-install 'python-mode))
-(if (package-installed-p 'pip-requirements) (require 'pip-requirements) (package-vc-install 'pip-requirements))
-
-
-;;;###autoload (autoload 'python-autopep8-format-buffer "current-file" nil t)
-;;;###autoload (autoload 'python-autopep8-format-region "current-file" nil t)
-;;;###autoload (autoload 'python-autopep8-format-on-save-mode "current-file" nil t)
 (reformatter-define python-autopep8-format
   :program "autopep8"
   :args (list input-file "--max-line-length=120")
   )
 
 
-;;;###autoload (autoload 'python-ruff-format-buffer "current-file" nil t)
-;;;###autoload (autoload 'python-ruff-format-region "current-file" nil t)
-;;;###autoload (autoload 'python-ruff-format-on-save-mode "current-file" nil t)
 (reformatter-define python-ruff-format
   :program "ruff"
   :args (list "format" "--stdin-filename" (or (buffer-file-name) input-file))
@@ -26,9 +16,8 @@
     (add-hook 'python-mode-hook 'python-ruff-format-on-save-mode)
   (add-hook 'python-mode-hook 'python-autopep8-format-on-save-mode))
 
-(if (package-installed-p 'highlight-indentation) (require 'highlight-indentation) (package-vc-install 'highlight-indentation))
 (add-hook 'python-mode-hook 'highlight-indentation-current-column-mode)
-(set-face-background 'highlight-indentation-current-column-face "#45413b")
+;;(set-face-background 'highlight-indentation-current-column-face "#45413b")
 
 
 (provide 'sw-python)

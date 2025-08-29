@@ -1,6 +1,7 @@
 ;;; SW-DASHBOARD --- sw-dashboard setup 
 
-(if (package-installed-p 'dashboard) (require 'dashboard) (package-vc-install 'dashboard))
+(add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
+(add-hook 'elpaca-after-init-hook #'dashboard-initialize)
 (dashboard-setup-startup-hook)
 
 (provide 'sw-dashboard)

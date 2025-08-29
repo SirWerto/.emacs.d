@@ -1,10 +1,4 @@
 ;;; SW-ORG --- sw-org-mode setup 
-
-
-
-(if (package-installed-p 'org-roam-ui) (require 'org-roam-ui) (package-vc-install 'org-roam-ui))
-(if (package-installed-p 'org-roam) (require 'org-roam) (package-vc-install 'org-roam))
-
 ;;(org-edit-src-exit)
 
 ;; (define-advice org-edit-src-exit (:before (&rest _args) format-python)
@@ -63,32 +57,4 @@
 	    (evil-local-set-key 'normal (kbd "TAB") 'org-cycle)
 	    (evil-local-set-key 'normal (kbd "C-k") 'org-move-subtree-up)
 	    (evil-local-set-key 'normal (kbd "C-j") 'org-move-subtree-down)))
-
-
-
-;; roam
-
-(setq org-roam-directory (file-truename "~/hive-mind"))
-(setq org-roam-dailies-directory "daily/")
-(setq org-roam-dailies-capture-templates
-	'(("d" "default" entry
-           "* %?"
-           :target (file+datetree "daily_notes.org" day))
-	  ))
-
-
-
-(org-roam-db-autosync-mode)
-
-(keymap-global-set "C-c o r i" 'org-roam-node-insert)
-(keymap-global-set "C-c o r f" 'org-roam-node-find)
-(keymap-global-set "C-c o r c" 'org-roam-dailies-goto-today)
-
-
-
-
-
-
-
-
 (provide 'sw-org)
