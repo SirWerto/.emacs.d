@@ -45,11 +45,20 @@
 
 
 
-
 ;; GENERAL PACKAGES
 
-;;;; Function init hooks
-(defun init-eglot-after-elpaca () (require 'sw-eglot))
+;;;; Function after init hooks
+(defun init-sw-eglot-after-elpaca () (require 'sw-eglot))
+(defun init-sw-hocon-mode-after-elpaca () (require 'sw-hocon))
+
+;; TODO:
+;; (add-hook 'elpaca-after-init-hook #'init-sw-eglot-after-elpaca)
+;; Eval eglot after elpacka has finished to install all packages. Because eglot comes with the emacs distribution.
+;;(elpaca eglot (require 'sw-eglot))
+
+(add-hook 'elpaca-after-init-hook #'init-sw-eglot-after-elpaca)
+(add-hook 'elpaca-after-init-hook #'init-sw-hocon-after-elpaca)
+
 
 ;;;; Libs
 (elpaca dash)
@@ -61,10 +70,6 @@
 (elpaca evil (require 'sw-evil))
 (elpaca evil-collection)
 (elpaca evil-easymotion (require 'sw-evil-easymotion))
-;; TODO:
-(add-hook 'elpaca-after-init-hook #'init-eglot-after-elpaca)
-;; Eval eglot after elpacka has finished to install all packages. Because eglot comes with the emacs distribution.
-;;(elpaca eglot (require 'sw-eglot))
 (elpaca gptel (require 'sw-llm))
 (elpaca org (require 'sw-org))
 (elpaca org-roam (require 'sw-org-roam))
@@ -92,7 +97,6 @@
 (elpaca python-mode (require 'sw-python))
 (elpaca sqlformat (require 'sw-sql))
 (elpaca nix-mode)
-;; (require 'sw-hocon)
 
 ;; ;;;; Modes - Others
 ;; (require 'sw-pairing)
