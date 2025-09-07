@@ -48,16 +48,16 @@
 ;; GENERAL PACKAGES
 
 ;;;; Function after init hooks
-(defun init-sw-eglot-after-elpaca () (require 'sw-eglot))
-(defun init-sw-hocon-mode-after-elpaca () (require 'sw-hocon))
+(defun init-sw-after-elpaca ()
+  "Eval sw config after elpaca has finished."
+  (progn
+    (message "Requiring sw")
+    (require 'sw-eglot)
+    (require 'sw-hocon)
+    (message "sw required"))
+  )
 
-;; TODO:
-;; (add-hook 'elpaca-after-init-hook #'init-sw-eglot-after-elpaca)
-;; Eval eglot after elpacka has finished to install all packages. Because eglot comes with the emacs distribution.
-;;(elpaca eglot (require 'sw-eglot))
-
-(add-hook 'elpaca-after-init-hook #'init-sw-eglot-after-elpaca)
-(add-hook 'elpaca-after-init-hook #'init-sw-hocon-after-elpaca)
+(add-hook 'elpaca-after-init-hook #'init-sw-after-elpaca)
 
 
 ;;;; Libs
