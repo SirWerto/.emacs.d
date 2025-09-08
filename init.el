@@ -97,6 +97,7 @@
 (elpaca python-mode (require 'sw-python))
 (elpaca sqlformat (require 'sw-sql))
 (elpaca nix-mode)
+(elpaca groovy-mode)
 
 ;; ;;;; Modes - Others
 ;; (require 'sw-pairing)
