@@ -98,6 +98,7 @@
 (elpaca sqlformat (require 'sw-sql))
 (elpaca nix-mode)
 (elpaca groovy-mode)
+(elpaca (openhab-mode :host github :repo "peterhoeg/openhab-mode" :branch "main"))
 
 ;; ;;;; Modes - Others
 ;; (require 'sw-pairing)

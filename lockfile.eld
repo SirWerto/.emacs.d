@@ -159,8 +159,9 @@
  (groovy-mode :source "elpaca-menu-lock-file" :recipe
 	      (:package "groovy-mode" :fetcher github :repo
 			"Groovy-Emacs-Modes/groovy-emacs-modes" :files
-			("*groovy*.el") :source "MELPA" :protocol
-			https :inherit t :depth treeless :ref
+			("*groovy*.el") :source
+			"elpaca-menu-lock-file" :protocol https
+			:inherit t :depth treeless :ref
 			"7b8520b2e2d3ab1d62b35c426e17ac25ed0120bb"))
  (highlight-indentation :source "elpaca-menu-lock-file" :recipe
 			(:package "highlight-indentation" :repo
@@ -235,6 +236,11 @@
 		     :source "elpaca-menu-lock-file" :protocol https
 		     :inherit t :depth treeless :ref
 		     "719feb7868fb567ecfe5578f6119892c771ac5e5"))
+ (openhab-mode :source "elpaca-menu-lock-file" :recipe
+	       (:source nil :protocol https :inherit t :depth treeless
+			:host github :repo "peterhoeg/openhab-mode"
+			:branch "main" :package "openhab-mode" :ref
+			"f676a1d94a9e6ab9e9adfd1cceb433dc440d177c"))
  (orderless :source "elpaca-menu-lock-file" :recipe
 	    (:package "orderless" :repo "oantolin/orderless" :fetcher
 		      github :files
@@ -321,8 +327,9 @@
 	       (:exclude ".dir-locals.el" "test.el" "tests.el"
 			 "*-test.el" "*-tests.el" "LICENSE" "README*"
 			 "*-pkg.el"))
-	      :source "MELPA" :protocol https :inherit t :depth
-	      treeless :ref "dda84d38fffdaf0c9b12837b504b402af910d01d"))
+	      :source "elpaca-menu-lock-file" :protocol https :inherit
+	      t :depth treeless :ref
+	      "dda84d38fffdaf0c9b12837b504b402af910d01d"))
  (scala-mode :source "elpaca-menu-lock-file" :recipe
 	     (:package "scala-mode" :fetcher github :repo
 		       "hvesalai/emacs-scala-mode" :files
@@ -407,17 +414,17 @@
 		      :source "elpaca-menu-lock-file" :protocol https
 		      :inherit t :depth treeless :ref
 		      "40c208eaab99999d7c1e4bea883648da24c03be3"))
- (with-editor :source "elpaca-menu-lock-file"
-   :recipe
-   (:package "with-editor" :fetcher github :repo "magit/with-editor"
-	     :files
-	     ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo"
-	      "doc/dir" "doc/*.info" "doc/*.texi" "doc/*.texinfo"
-	      "lisp/*.el" "docs/dir" "docs/*.info" "docs/*.texi"
-	      "docs/*.texinfo"
-	      (:exclude ".dir-locals.el" "test.el" "tests.el"
-			"*-test.el" "*-tests.el" "LICENSE" "README*"
-			"*-pkg.el"))
-	     :source "elpaca-menu-lock-file" :protocol https :inherit
-	     t :depth treeless :ref
-	     "7787e19764c1089390584ac17a80129ef9afaa14")))
+ (with-editor :source "elpaca-menu-lock-file" :recipe
+	      (:package "with-editor" :fetcher github :repo
+			"magit/with-editor" :files
+			("*.el" "*.el.in" "dir" "*.info" "*.texi"
+			 "*.texinfo" "doc/dir" "doc/*.info"
+			 "doc/*.texi" "doc/*.texinfo" "lisp/*.el"
+			 "docs/dir" "docs/*.info" "docs/*.texi"
+			 "docs/*.texinfo"
+			 (:exclude ".dir-locals.el" "test.el"
+				   "tests.el" "*-test.el" "*-tests.el"
+				   "LICENSE" "README*" "*-pkg.el"))
+			:source "elpaca-menu-lock-file" :protocol
+			https :inherit t :depth treeless :ref
+			"7787e19764c1089390584ac17a80129ef9afaa14")))
