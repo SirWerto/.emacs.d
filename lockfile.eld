@@ -39,6 +39,12 @@
 			  :source "elpaca-menu-lock-file" :protocol
 			  https :inherit t :depth treeless :ref
 			  "ea01a3d9358e968f75e3ed15dec6a2a96ce3d9a1"))
+ (combobulate :source "elpaca-menu-lock-file" :recipe
+	      (:source "elpaca-menu-lock-file" :protocol https
+		       :inherit t :depth treeless :host github :repo
+		       "mickeynp/combobulate" :branch "master"
+		       :package "combobulate" :ref
+		       "17c71802eed2df1a6b25199784806da6763fb90c"))
  (company :source "elpaca-menu-lock-file" :recipe
 	  (:package "company" :fetcher github :repo
 		    "company-mode/company-mode" :files
@@ -237,9 +243,10 @@
 		     :inherit t :depth treeless :ref
 		     "719feb7868fb567ecfe5578f6119892c771ac5e5"))
  (openhab-mode :source "elpaca-menu-lock-file" :recipe
-	       (:source nil :protocol https :inherit t :depth treeless
-			:host github :repo "peterhoeg/openhab-mode"
-			:branch "main" :package "openhab-mode" :ref
+	       (:source "elpaca-menu-lock-file" :protocol https
+			:inherit t :depth treeless :host github :repo
+			"peterhoeg/openhab-mode" :branch "main"
+			:package "openhab-mode" :ref
 			"f676a1d94a9e6ab9e9adfd1cceb433dc440d177c"))
  (orderless :source "elpaca-menu-lock-file" :recipe
 	    (:package "orderless" :repo "oantolin/orderless" :fetcher
@@ -414,17 +421,17 @@
 		      :source "elpaca-menu-lock-file" :protocol https
 		      :inherit t :depth treeless :ref
 		      "40c208eaab99999d7c1e4bea883648da24c03be3"))
- (with-editor :source "elpaca-menu-lock-file" :recipe
-	      (:package "with-editor" :fetcher github :repo
-			"magit/with-editor" :files
-			("*.el" "*.el.in" "dir" "*.info" "*.texi"
-			 "*.texinfo" "doc/dir" "doc/*.info"
-			 "doc/*.texi" "doc/*.texinfo" "lisp/*.el"
-			 "docs/dir" "docs/*.info" "docs/*.texi"
-			 "docs/*.texinfo"
-			 (:exclude ".dir-locals.el" "test.el"
-				   "tests.el" "*-test.el" "*-tests.el"
-				   "LICENSE" "README*" "*-pkg.el"))
-			:source "elpaca-menu-lock-file" :protocol
-			https :inherit t :depth treeless :ref
-			"7787e19764c1089390584ac17a80129ef9afaa14")))
+ (with-editor :source "elpaca-menu-lock-file"
+   :recipe
+   (:package "with-editor" :fetcher github :repo "magit/with-editor"
+	     :files
+	     ("*.el" "*.el.in" "dir" "*.info" "*.texi" "*.texinfo"
+	      "doc/dir" "doc/*.info" "doc/*.texi" "doc/*.texinfo"
+	      "lisp/*.el" "docs/dir" "docs/*.info" "docs/*.texi"
+	      "docs/*.texinfo"
+	      (:exclude ".dir-locals.el" "test.el" "tests.el"
+			"*-test.el" "*-tests.el" "LICENSE" "README*"
+			"*-pkg.el"))
+	     :source "elpaca-menu-lock-file" :protocol https :inherit
+	     t :depth treeless :ref
+	     "7787e19764c1089390584ac17a80129ef9afaa14")))

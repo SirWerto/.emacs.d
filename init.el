@@ -20,6 +20,11 @@
   "Directory to store output related to external tools like mail."
   )
 
+(defconst data-directory
+  (expand-file-name "data/" user-emacs-directory)
+  "Directory to store data like things, for example, LLMs prompts."
+  )
+
 (defconst elpaca-lock-file-path
   (expand-file-name "lockfile.eld" user-emacs-directory)
   "Elpaca lock file path."
@@ -74,6 +79,8 @@
 (elpaca org (require 'sw-org))
 (elpaca org-roam (require 'sw-org-roam))
 (elpaca org-roam-ui)
+;; (elpaca (org-similarity :host github :repo "brunoarine/org-similarity" :branch "main") (require 'sw-org-similarity))
+;; https://org-roam.discourse.group/t/a-demo-of-ai-for-linking-writing-and-thinking-with-org-roam-should-we-build-org-roam-ai/2891/17
 (elpaca orderless (require 'sw-orderless))
 ;;(elpaca dap (require 'sw-dap))
 (elpaca transient) ;;just in case magit fails
@@ -85,6 +92,7 @@
 ;; ;;(require 'sw-corfu)
 (elpaca envrc (require 'sw-envrc))
 (elpaca highlight-indentation)
+(elpaca (combobulate :host github :repo "mickeynp/combobulate" :branch "master"))
 
 
 
@@ -96,7 +104,7 @@
 (elpaca scala-mode)
 (elpaca python-mode (require 'sw-python))
 (elpaca sqlformat (require 'sw-sql))
-(elpaca nix-mode)
+(elpaca nix-mode (require 'sw-nix))
 (elpaca groovy-mode)
 (elpaca (openhab-mode :host github :repo "peterhoeg/openhab-mode" :branch "main"))
 

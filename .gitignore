@@ -2,3 +2,6 @@
 !sw
 !sw/*
 !sw/*/*.el
+!data
+!data/*
+!data/*/*.txt
