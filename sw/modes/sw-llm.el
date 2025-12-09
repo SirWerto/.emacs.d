@@ -16,20 +16,22 @@
 
 
 
-(setq main-llm-model "llama2:7b")
+(setq main-llm-model "qwen2.5:1.5b")
 (setq gptel-backend (gptel-make-ollama (concat saposa " to your service")
                  :host "localhost:11434"
                  :stream t
                  :models (list main-llm-model)))
 
 (setq gptel-model main-llm-model)
+(setq gptel-expert-commands t)
 
-(setf (alist-get 'python-docstring gptel-directives)
-      (get-string-from-file (expand-file-name "python-docstring.txt" prompts-directory))
+(setf (alist-get 'code-purpose gptel-directives)
+      (get-string-from-file (expand-file-name "code-purpose.txt" prompts-directory))
       )
 
 
 (evil-all-global-set-key (kbd "C-c l l m") 'gptel)
 (evil-all-global-set-key (kbd "C-c l l q") 'gptel-menu)
+(evil-all-global-set-key (kbd "C-c l l r") 'gptel-rewrite)
 
 (provide 'sw-llm)

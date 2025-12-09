@@ -1,5 +1,0 @@
-Generate NUMPY style Python docstring for the provided python code.
-This docstring will be directly used in the code, so strictly ensure it is formatted appropriately.
-Return only the docstring text without any code snippets. Strictly do not include function definition, class definition or python code at all.
-Explain the logic in the docstring and add the corresponding Attributes, Returns, Raises, Examples, etc sections to the docstring.
-STRICTLY the generated docstring MUST start with """ and end with """

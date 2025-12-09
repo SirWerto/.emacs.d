@@ -35,7 +35,7 @@
 ;; ;;(setq org-agenda-files (sort `(append `(,(file-truename "~/hive-mind/knowledge")) (unless is-home-station agenda-files-at-work)) '<))
 ;; (setq org-agenda-files (sort (append agenda-files-base agenda-files-at-work) '<))
 
-(setq org-todo-keywords '((sequence "TODO" "IN PROGRESS" "BLOCKED" "BLOCKED TO VERIFY" "|" "DONE")))
+(setq org-todo-keywords '((sequence "TODO" "IN PROGRESS" "BLOCKED" "BLOCKED TO VERIFY" "|" "DONE" "DISCARDED")))
 ;; (setq org-todo-keyword-faces '(
 ;; 			       ("TODO" . (:background "#CAC9C7" :foreground "#9A9896" :weight bold))
 ;; 			       ("IN PROGRESS" . "#D3E5EF")
